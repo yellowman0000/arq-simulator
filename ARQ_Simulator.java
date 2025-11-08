@@ -29,26 +29,7 @@ public class ARQ_Simulator {
         try {
             fileData = Files.readAllBytes(Paths.get(fileName));
         } catch (IOException e) {
-=======
-
-        File file = new File(fileName);
-
-        // Check if file exists
-        if (!file.exists()) {
->>>>>>> Stashed changes
             System.out.println("Error: cannot open file.");
-            return;
-        }
-
-        // Read file
-        FileInputStream input = null;
-        byte[] fileData = new byte[(int) file.length()];
-        try {
-            input = new FileInputStream(file);
-            input.read(fileData);
-            input.close();
-        } catch (IOException e) {
-            System.out.println("Error: problem reading the file.");
             return;
         }
 
