@@ -24,7 +24,6 @@ public class ARQ_Simulator {
         // 2. Get file name
         System.out.print("What is the input file name? ");
         String fileName = scan.nextLine().trim();
-<<<<<<< Updated upstream
         byte[] fileData;
         try {
             fileData = Files.readAllBytes(Paths.get(fileName));
