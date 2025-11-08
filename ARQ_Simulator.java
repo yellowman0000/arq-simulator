@@ -90,12 +90,12 @@ public class ARQ_Simulator {
                 System.out.println("Frame " + i + ": Seq No. " + seq + "   ACK " + expectedAck);
                 duplicatedAck++;
                 if (duplicatedAck == 3) {
-                    // fast retransmit lost and following frames
+                    // retransmit lost and following frames
                     for (int j = lostFrame; j <= i; j++) {
-                        int s = j % 64;
-                        System.out.println("Frame " + j + ": Seq No. " + s + " (Retransmit) ACK " + ((s + 1) % 64));
+                        int sq = j % 64; // sq = sequence
+                        System.out.println("Frame " + j + ": Seq No. " + sq + " (Retransmit) ACK " + ((sq + 1) % 64));
                     }
-                    lostFrame = null;
+                    lostFrame = null; // clear lost frame
                 }
             } else {
                 // normal transmission
@@ -107,27 +107,27 @@ public class ARQ_Simulator {
     // --- Selective Repeat ---
     static void SelectiveRepeat(int total, List<Integer> lostFrames) {
         Set<Integer> lost = new HashSet<>(lostFrames);
-        Integer lostCount = null;
+        Integer lostFrame = null;
 
         for (int i = 0; i < total; i++) {
-            int seq = i % 64;
+            int seq = i % 64; // 0-63
             if (lost.contains(i)) {
                 System.out.println("Frame " + i + ": Seq No. " + seq + " (Loss)  -");
-                lostCount = i;
-            } else if (lostCount != null) {
-                int lostSeq = lostCount % 64;
+                lostFrame = i;
+            } else if (lostFrame != null) {
+                int lostSeq = lostFrame % 64;
                 System.out.println("Frame " + i + ": Seq No. " + seq + "   NACK " + lostSeq);
-                System.out.println("Frame " + lostCount + ": Seq No. " + lostSeq + " (Retransmit) ACK " + ((lostSeq + 1) % 64));
-                lostCount = null;
+                System.out.println("Frame " + lostFrame + ": Seq No. " + lostSeq + " (Retransmit) ACK " + ((lostSeq + 1) % 64));
+                lostFrame = null;
             } else {
                 System.out.println("Frame " + i + ": Seq No. " + seq + "   ACK " + ((seq + 1) % 64));
             }
         }
 
         // If last frame lost, retransmit at end
-        if (lostCount != null) {
-            int lostSeq = lostCount % 64;
-            System.out.println("Frame " + lostCount + ": Seq No. " + lostSeq + " (Retransmit) ACK " + ((lostSeq + 1) % 64));
+        if (lostFrame != null) {
+            int lostSeq = lostFrame % 64;
+            System.out.println("Frame " + lostFrame + ": Seq No. " + lostSeq + " (Retransmit) ACK " + ((lostSeq + 1) % 64));
         }
     }
 }
