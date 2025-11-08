@@ -14,9 +14,9 @@ public class ARQ_Simulator {
 
         // 1. Get algorithm choice
         System.out.print("Which flow control algorithm? (1: Go-Back-N ARQ or 2: Selective-Repeat ARQ): ");
-        int mode = scan.nextInt();
+        int algo = scan.nextInt();
         scan.nextLine(); // consume newline
-        if (mode != 1 && mode != 2) {
+        if (algo != 1 && algo != 2) {
             System.out.println("Error: please enter 1 or 2 only.");
             return;
         }
@@ -51,7 +51,7 @@ public class ARQ_Simulator {
         System.out.println(".\n");
 
         // 5. Run algorithm
-        if (mode == 1) {
+        if (algo == 1) {
             System.out.println("Go-Back-N ARQ (Window Size = " + WIN_GBN + "; Sequence Number 0 to 63)");
             simulateGBN(totalFrames, lostList);
         } else {
