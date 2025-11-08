@@ -7,7 +7,7 @@ public class ARQ_Simulator {
     static final int FRAME_SIZE = 1200;  // bytes per frame
     static final int WIN_GBN = 63;       // Go-Back-N window = 2^k - 1
     static final int WIN_SR  = 32;       // Selective Repeat window = 2^(k-1)
-    static final long SEED = 217;        // fixed seed for reproducible losses
+    static final long FIXED_NUMBER = 217;        // With a fixed number, you get the same lost frames every time.
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -64,7 +64,7 @@ public class ARQ_Simulator {
 
     // Pick unique lost frame numbers
     static Set<Integer> pickLostFrames(int total, int count) {
-        Random r = new Random(SEED);
+        Random r = new Random(FIXED_NUMBER);
         Set<Integer> lost = new HashSet<>();
         while (lost.size() < count && total > 0) {
             lost.add(r.nextInt(total));
